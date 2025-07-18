@@ -20,15 +20,12 @@ ynh_app_setting_set_default --key=php_memory_limit --value=256M
 #=================================================
 ynh_script_progression "Upgrading source files..."
 
-# Download, check integrity, uncompress and patch the source from manifest.toml
+if ynh_app_upgrading_from_version_before 5.1.0~ynh1
+then
+mv "$install_dir"/* "$data_dir"
+fi
+
 ynh_setup_source --dest_dir="$install_dir" --full_replace --keep=".env"
-
-#=================================================
-# UPDATE A CONFIG FILE
-#=================================================
-# ynh_script_progression "Updating $app's configuration files..."
-
-# ynh_config_add --template=".env.example" --destination="$install_dir/.env"
 
 #==============================================
 # REAPPLY SYSTEM CONFIGURATIONS
