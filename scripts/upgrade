@@ -22,7 +22,9 @@ ynh_script_progression "Upgrading source files..."
 
 if ynh_app_upgrading_from_version_before 5.1.0~ynh1
 then
-mv "$install_dir"/* "$data_dir"
+ mv "$install_dir"/* "$data_dir/"
+ ynh_safe_rm $install_dir/.env
+ ynh_config_add --template=".env.example" --destination="$install_dir/.env"
 fi
 
 ynh_setup_source --dest_dir="$install_dir" --full_replace --keep=".env"
